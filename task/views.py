@@ -7,7 +7,6 @@ def courses(request, id):
     lessons = Lesson.objects.all().filter(course=id)
     teacher = Course.object.get(id=id).tutor
 
-
     return render(request, 'frontApp/lessonsPage.html', {'lessons': lessons, 'id': id, 'teacher': teacher})
 
 def update(request,id):
@@ -20,6 +19,5 @@ def update(request,id):
 
 def lesson(request, id_course, id_lesson):
     lessons = Activity.objects.all().filter(lesson=id_lesson)
-
 
     return render(request, 'task/tasks.html', {'lessons': lessons})

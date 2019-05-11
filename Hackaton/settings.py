@@ -79,10 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'd7898rb0bld853',
-        'USER' : 'bfllvpgcjavyww',
-        'PASSWORD' : '48e213dd19505c4aa8e4dda151b14187fb6a919c73919f0a9da3e97d64495b29',
-        'HOST' : 'ec2-75-101-131-79.compute-1.amazonaws.com',
-        'PORT' : '5432',
+        'USER': 'bfllvpgcjavyww',
+        'PASSWORD': '48e213dd19505c4aa8e4dda151b14187fb6a919c73919f0a9da3e97d64495b29',
+        'HOST': 'ec2-75-101-131-79.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

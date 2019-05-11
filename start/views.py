@@ -3,18 +3,24 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from database.models import Teacher, Course, Student, StudentCourse
 
 
 def home(request):
     if '_auth_user_id' not in request.session.keys():
         return redirect('/log')
 
-    if 'st' in User.objects.get(id=request.session['_auth_user_id']).username:
-        print('yes')
-    else:
-        print('no')
+    user = User.objects.get(id=request.session['_auth_user_id'])
 
-    return render(request, 'start/home.html')
+    if 'st' in user.username:
+        student = Student.objects.get(user=user)
+        courses = StudentCourse.objects.all().filter(student=student)
+        return render(request, 'start/student.html', {'courses': courses})
+    else:
+        teacher = Teacher.objects.get(user=user)
+        course = Course.objects.all().filter(tutor=teacher)
+        return render(request, 'start/teacher.html', {'data': {'teacher': teacher, 'course': course}})
+
 
 
 def log(request):

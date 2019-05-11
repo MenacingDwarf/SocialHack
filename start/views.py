@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from database.models import Teacher, Course, Student, StudentCourse
 import pusher
+import json
 
 
 def home(request):
@@ -16,12 +17,16 @@ def home(request):
     if 'st' in user.username:
         student = Student.objects.get(user=user)
         courses = StudentCourse.objects.all().filter(student=student)
-        return render(request, 'start/student.html', {'courses': courses})
+        data = json.dumps(list(courses.values()))
+        courses_name = []
+        for i in courses:
+            courses_name.append(i.course.title)
+
+        return render(request, 'start/student.html', {'courses': data, 'titles':courses_name})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
         return render(request, 'frontApp/teacherProfile.html', {'teacher': teacher, 'courses': course})
-
 
 
 def log(request):
@@ -37,7 +42,10 @@ def log(request):
 
 
 def push(request):
+    return render(request, 'start/pusher.html')
 
+
+def add(request):
     pusher_client = pusher.Pusher(
         app_id='780550',
         key='a26085dc09d59ab89666',
@@ -46,6 +54,15 @@ def push(request):
         ssl=True
     )
 
-    pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
+    print(request.POST['ref'])
 
-    return render(request, 'start/pusher.html')
+    pusher_client.trigger('my-channel', 'my-event', {'message': request.POST['ref']})
+
+    print(request.POST['ref'])
+
+    return redirect('/push')
+
+
+def out(request):
+    logout(request)
+    return redirect('/')

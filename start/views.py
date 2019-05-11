@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from database.models import Teacher, Course, Student, StudentCourse
+import pusher
 
 
 def home(request):
@@ -33,3 +34,18 @@ def log(request):
             return render(request, 'start/log.html', {'message': 'Неверный логин или пароль'})
 
     return render(request, 'start/log.html')
+
+
+def push(request):
+
+    pusher_client = pusher.Pusher(
+        app_id='780550',
+        key='a26085dc09d59ab89666',
+        secret='c6ac4917c6fcca212017',
+        cluster='eu',
+        ssl=True
+    )
+
+    pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
+
+    return render(request, 'start/pusher.html')

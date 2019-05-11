@@ -4,9 +4,10 @@ from database.models import Course, Lesson
 # Create your views here.
 def courses(request, id):
     lessons = Lesson.objects.all().filter(course=id)
+    teacher = Course.objects.get(id=id).tutor
 
 
-    return render(request, 'task/lessons.html', {'lessons': lessons, 'id': id})
+    return render(request, 'task/lessons.html', {'lessons': lessons, 'id': id, 'teacher': teacher})
 
 def update(request,id):
     if request.method == 'POST':

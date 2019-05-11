@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Student(models.Model):
     user = models.ForeignKey(User, models.CASCADE, default=1)
     name = models.CharField(max_length=30, blank=True)
+    ava = models.CharField(max_length=100, default="https://cdn.pixabay.com/photo/2014/04/02/10/25/man-303792__340.png")
     second_name = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
@@ -14,6 +15,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
     name = models.CharField(max_length=30)
+    ava = models.CharField(max_length=100, default="https://cdn.pixabay.com/photo/2014/04/02/10/25/man-303792__340.png")
     second_name = models.CharField(max_length=30)
 
     def __str__(self):

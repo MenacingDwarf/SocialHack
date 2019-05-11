@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Страница преподавателя</h1>
+
+{{ teacher }}
+
+{% for i in course %}
+    <a href="/courses/{{ i.id }}"></a>
+{{ i }}
+{% endfor %}
+
+</body>
+</html>

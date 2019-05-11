@@ -1,0 +1,44 @@
+body {
+    font-size: 20px;
+    background-color: whitesmoke;
+}
+
+.header {
+	width: 100%;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+.logos {
+    font-weight: bold;
+    height: 5vh;
+    width: 100%;
+    font-size: 1.5em;
+    margin-bottom: 40px;
+}
+.green {
+    color: lightgreen;
+}
+.panel {
+    width: 100%;
+    height: 10vh;
+    background-color: lightgreen;
+}
+.card {
+    background-color: white;
+    border-radius: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.teacher-card {
+    width: 50%;
+    padding: 20px;
+    margin: auto;
+}
+.course-card {
+    width: 25%;
+    height: 30%;
+    min-height: 30%;
+    max-height: 30%;
+    padding: 10px;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}

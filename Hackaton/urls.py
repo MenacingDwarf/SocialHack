@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('start.urls')),
     path('courses/', include('task.urls')),
 
+    path('front/', include('frontApp.urls')),
 ]

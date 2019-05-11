@@ -29,6 +29,7 @@ def home(request):
         return render(request, 'frontApp/teacherProfile.html', {'teacher': teacher, 'courses': course})
 
 
+
 def log(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['user'], password=request.POST['pass'])

@@ -4,8 +4,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from database.models import Teacher, Course, Student, StudentCourse
-
-
+import json
 def home(request):
     if '_auth_user_id' not in request.session.keys():
         return redirect('/log')
@@ -15,7 +14,8 @@ def home(request):
     if 'st' in user.username:
         student = Student.objects.get(user=user)
         courses = StudentCourse.objects.all().filter(student=student)
-        return render(request, 'start/student.html', {'courses': courses})
+        data = json.dumps(list(courses.values()))
+        return render(request, 'start/student.html', {"courses": data})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)

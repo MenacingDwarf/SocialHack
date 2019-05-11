@@ -9,7 +9,7 @@ class Student(models.Model):
     second_name = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
-        return self.name+' '+self.second_name
+        return self.name + ' ' + self.second_name
 
 
 class Teacher(models.Model):
@@ -19,7 +19,7 @@ class Teacher(models.Model):
     second_name = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.name+' '+self.second_name
+        return self.name + ' ' + self.second_name
 
 
 class Course(models.Model):
@@ -72,3 +72,14 @@ class StudentCourse(models.Model):
     correctness = models.FloatField()
 
 
+class Department(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class DepartmentCourse(models.Model):
+    course = models.ForeignKey('Course', models.CASCADE)
+    department = models.ForeignKey('Department', models.CASCADE)
+    coef = models.FloatField()

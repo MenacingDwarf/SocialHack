@@ -11,7 +11,7 @@
 </head>
 <body>
 {% for i in lessons %}
-<h1>{{ i }}</h1>
+<a href="{{ i.id }}">{{ i }}</a>
 {% endfor %}
 
 <form action="/courses/update/{{ id }}" method="post">

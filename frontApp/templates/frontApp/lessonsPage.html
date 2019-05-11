@@ -1,0 +1,17 @@
+{% extends 'frontApp/teacherWraper.html' %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Лекции</h1>
+        <div class="row">
+            {% for lesson in lessons %}
+                <a class="card lesson-card" href="{{ lesson.id }}">{{ lesson }}</a>
+            {% endfor %}
+            <div class="card new-lesson" onclick="startAddingLesson(this)">Новая лекция</div>
+        </div>
+    </div>
+
+    <div id="course_id" hidden="hidden">{{ id }}</div>
+    {% load staticfiles %}
+    <script src="{% static 'lessons.js' %}"></script>
+{% endblock %}

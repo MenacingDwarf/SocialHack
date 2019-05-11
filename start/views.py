@@ -19,7 +19,7 @@ def home(request):
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
-        return render(request, 'start/teacher.html', {'data': {'teacher': teacher, 'course': course}})
+        return render(request, 'frontApp/teacherProfile.html', {'teacher': teacher, 'courses': course})
 
 
 

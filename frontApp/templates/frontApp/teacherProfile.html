@@ -3,12 +3,15 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="card teacher-card"><h3>{{ teacher.second_name }} {{ teacher.name }}</h3></div>
+            <div class="card teacher-card row">
+                <div class="col-3"><img src="{{ teacher.ava }}"></div>
+                <div class="col-9"><h4>{{ teacher.second_name }} {{ teacher.name }}</h4></div>
+            </div>
         </div>
         <h1>Курсы</h1>
         <div class="row">
             {% for course in courses %}
-                <div class="card course-card">{{ course.title }}</div>
+                <a class="card course-card" href="/courses/{{ course.id }}">{{ course.title }}</a>
             {% endfor %}
         </div>
     </div>

@@ -16,12 +16,12 @@ body {
     margin-bottom: 40px;
 }
 .green {
-    color: lightgreen;
+    color: limegreen;
 }
 .panel {
     width: 100%;
     height: 10vh;
-    background-color: lightgreen;
+    background-color: limegreen;
 }
 .card {
     background-color: white;
@@ -33,6 +33,9 @@ body {
     padding: 20px;
     margin: auto;
 }
+.col-3 > img {
+    width: 100%;
+}
 .course-card {
     width: 25%;
     height: 30%;
@@ -40,5 +43,12 @@ body {
     max-height: 30%;
     padding: 10px;
     margin-left: 5%;
+    text-decoration: none;
+    color: black;
     margin-bottom: 5%;
+}
+.course-card:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: gray;
 }

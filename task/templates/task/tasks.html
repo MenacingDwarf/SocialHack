@@ -31,6 +31,8 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
+      <form action="update/present/" method="post">
+    {% csrf_token %}
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Презентация</h5>
@@ -40,45 +42,52 @@
       </div>
       <div class="modal-body">
         <label for="formGroupExampleInput">Название слайда</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "lesson_name">
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "present_name">
           <label for="formGroupExampleInput">Ссылка на слайд</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "lesson_name">
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "present_url">
       </div>
 
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary" >Save changes</button>
       </div>
     </div>
+      </form>
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exModal">
   Добавить опрос
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
+      <form action="update/task/" method="post">
+    {% csrf_token %}
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Презентация</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Опрос</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <label for="formGroupExampleInput">Название слайда</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "lesson_name">
-          <label for="formGroupExampleInput">Ссылка на слайд</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "lesson_name">
+        <label for="formGroupExampleInput">Название опроса</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "task_name">
+          <label for="formGroupExampleInput">Содержание</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "task_content">
+          <label for="formGroupExampleInput">Ответы</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "task_answer">
+          <label for="formGroupExampleInput">Правильный ответ</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder=" input" name = "task_correct_answer">
       </div>
 
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

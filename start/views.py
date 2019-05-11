@@ -3,22 +3,36 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from database.models import Teacher, Course, Student, StudentCourse
+from database.models import Teacher, Course, Student, StudentCourse, Lesson
 import pusher
+import json
 
 
 def home(request):
     if '_auth_user_id' not in request.session.keys():
         return redirect('/log')
+
     user = User.objects.get(id=request.session['_auth_user_id'])
+
     if 'st' in user.username:
         student = Student.objects.get(user=user)
-        courses = StudentCourse.objects.all().filter(student=student)
-        return render(request, 'start/student.html', {'courses': courses})
+        courses = list(StudentCourse.objects.all().filter(student=student))
+        #data = json.dumps(list(courses.values()))
+        courses_name = []
+        lectures = []
+        for i in courses:
+            courses_name.append(i.course.title)
+            lectures.append(Lesson.objects.all().filter(course=i.course))
+
+        #lectures = Lesson.objects.all().filter(course=courses)
+
+
+        return render(request, 'start/student.html', { 'titles':courses_name, 'lessons': lectures})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
         return render(request, 'frontApp/teacherProfile.html', {'teacher': teacher, 'courses': course})
+
 
 
 def log(request):
@@ -29,10 +43,15 @@ def log(request):
             return redirect('/')
         else:
             return render(request, 'start/log.html', {'message': 'Неверный логин или пароль'})
+
     return render(request, 'start/log.html')
 
 
-def push(request):
+def push(request, id):
+    return render(request, 'start/pusher.html')
+
+
+def add(request):
     pusher_client = pusher.Pusher(
         app_id='780550',
         key='a26085dc09d59ab89666',
@@ -40,5 +59,20 @@ def push(request):
         cluster='eu',
         ssl=True
     )
-    pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
-    return render(request, 'start/pusher.html')
+
+    print(request.POST['ref'])
+
+    pusher_client.trigger('my-channel', 'my-event', {'message': request.POST['ref']})
+
+    print(request.POST['ref'])
+
+    return redirect('/push')
+
+
+def out(request):
+    logout(request)
+    return redirect('/')
+
+
+def statistic(request):
+    pass

@@ -3,10 +3,12 @@
 <head>
   <title>Pusher Test</title>
   <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+
   <script>
+
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
-    
+
     var pusher = new Pusher('a26085dc09d59ab89666', {
       cluster: 'eu',
       forceTLS: true
@@ -15,15 +17,31 @@
     var channel = pusher.subscribe('my-channel');
 
     channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
+      //document.getElementById("image").innerHTML = data.message;
+
+      var edit_save = document.getElementById("image");
+      edit_save.src = data.message;
+
     });
+
   </script>
+
 </head>
 
+
+<form action="/add/" method="post">
+    {% csrf_token %}
+
+    <label for="exampleInputEmail1">Адрес электронной почты</label>
+    <input type="text" id="exampleInputEmail1" name="ref">
+
+    <button type="submit">Загрузить</button>
+
+</form>
+
+
 <body>
-  <h1>Pusher Test</h1>
-  <p>
-    Try publishing an event to channel <code>my-channel</code>
-    with event name <code>my-event</code>.
-  </p>
+  <img id=image src="https://raw.githubusercontent.com/Egor14/web/master/jordan.png">
+
+
 </body>

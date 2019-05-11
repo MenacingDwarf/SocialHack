@@ -11,3 +11,6 @@ admin.site.register(models.Activity)
 admin.site.register(models.Task)
 admin.site.register(models.Answer)
 admin.site.register(models.StudentTask)
+admin.site.register(models.Department)
+admin.site.register(models.DepartmentCourse)
+

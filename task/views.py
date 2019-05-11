@@ -7,7 +7,7 @@ from django.http import JsonResponse
 def courses(request, id):
     lessons = Lesson.objects.all().filter(course=id)
 
-    teacher = Course.objects.get(id=id).tutor
+    teacher = Course.object.get(id=id).tutor
 
 
     return render(request, 'frontApp/lessonsPage.html', {'lessons': lessons, 'id': id, 'teacher': teacher})

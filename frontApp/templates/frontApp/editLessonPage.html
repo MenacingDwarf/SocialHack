@@ -1,0 +1,25 @@
+{% extends 'frontApp/teacherWraper.html' %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+    <div class="container">
+    <section class="columns">
+  		<div class="column">
+            <div class="column-title">Презентации</div>
+            <div class="cards"></div>
+            <div class="add-card" onclick="start_adding_card(this)">
+                <div class="plus"></div>Добавить
+            </div>
+        </div>
+        <div class="column">
+            <div class="column-title">Опросы</div>
+            <div class="cards"></div>
+            <div class="add-card" onclick="start_adding_card(this)">
+                <div class="plus"></div>Добавить
+            </div>
+        </div>
+	</section>
+
+    </div>
+    {% load staticfiles %}
+    <script src="{% static 'editLesson.js' %}"></script>
+{% endblock %}

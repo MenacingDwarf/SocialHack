@@ -1,17 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Student(models.Model):
-    login = models.ForeignKey('User', models.CASCADE)
-    name = models.CharField(max_length=30)
-    second_name = models.CharField(max_length=30)
+    user = models.ForeignKey(User, models.CASCADE, default=1)
+    name = models.CharField(max_length=30, blank=True)
+    second_name = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.name+' '+self.second_name
 
 
 class Teacher(models.Model):
-    login = models.ForeignKey('User', models.CASCADE)
+    user = models.ForeignKey(User, models.CASCADE)
     name = models.CharField(max_length=30)
     second_name = models.CharField(max_length=30)
 

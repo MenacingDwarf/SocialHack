@@ -1,14 +1,11 @@
-{% extends 'frontApp/mainWraper.html' %}
+{% extends 'frontApp/teacherWraper.html' %}
 {% block title %}Профиль{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="card teacher-card"><h3>{{ teacher.second_name }} {{ teacher.name }}</h3></div>
-        </div>
         <h1>Курсы</h1>
         <div class="row">
             {% for course in courses %}
-                <div class="card course-card">{{ course.title }}</div>
+                <a class="card course-card" href="/courses/{{ course.id }}">{{ course.title }}</a>
             {% endfor %}
         </div>
     </div>

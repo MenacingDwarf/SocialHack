@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'frontApp',
     'start',
+    'task',
     'database',
     'django.contrib.admin',
     'django.contrib.auth',

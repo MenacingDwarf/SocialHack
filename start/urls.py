@@ -9,5 +9,6 @@ urlpatterns = [
     path('add/', views.add, name='add'),
     path('out/', views.out, name='out'),
     path('option/', views.option, name='option'),
-    path('statistic/<int:id>', views.statistic, name='statistic')
+    path('statistic/<int:id>', views.statistic, name='statistic'),
+    path('activate/', views.activate, name='activate')
 ]

@@ -22,9 +22,11 @@ def home(request):
         data = json.dumps(list(courses.values()))
         courses_name = []
         lectures = []
+        active_lectures = []
         for i in list(courses):
             courses_name.append(i.course.title)
             lectures.append(Lesson.objects.all().filter(course=i.course))
+            active_lectures.append(Lesson.objects.all().filter(course=i.course, is_active=True))
 
         courses_name = json.dumps(courses_name)
         # --------------------------------------------------------------
@@ -54,7 +56,8 @@ def home(request):
         print(dep)
         # --------------------------------------------------------------
         return render(request, 'frontApp/studentProfile.html',
-                      {'student': student, 'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep})
+                      {'student': student, 'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep,
+                       'active': active_lectures})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
@@ -123,3 +126,13 @@ def statistic(request, id):
     print(d)
 
     return JsonResponse({"data": d})
+
+
+def activate(request):
+    lesson = Lesson.objects.get(id=request.POST['id'])
+    if lesson.is_active == True:
+        lesson.is_active = False
+    else:
+        lesson.is_active = True
+    lesson.save()
+    return redirect('/courses/{}/{}'.format(lesson.course.id, lesson.id))

@@ -246,6 +246,26 @@ function sendTask(card) {
     xhr.send(body);
 }
 
+var changeStatus = function(elem) {
+    elem.innerHTML = "Загрузка...";
+    var csrftoken = getCookie('csrftoken');
+    var xhr = new XMLHttpRequest();
+    var body = "id=" + encodeURIComponent(document.getElementById("lesson_id").innerHTML);
+    xhr.open("POST", '/activate/', true);
+
+    xhr.onreadystatechange = function () {
+        if (JSON.parse(this.responseText).is_active) {
+            elem.innerHTML = "Закончить лекцию!";
+        }
+        else elem.innerHTML = "Начать лекцию!";
+    };
+
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    xhr.send(body);
+};
+
 // Обработка нажатия клавиши ентер при вводе текста в текстовое поле
 function pressEnter(e) {
     if (e.keyCode == 13) {

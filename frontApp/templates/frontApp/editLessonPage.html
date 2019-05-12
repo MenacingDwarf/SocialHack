@@ -5,9 +5,14 @@
     <script src="https://www.amcharts.com/lib/4/charts.js"></script>
     <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
     <div class="container">
+    <h1>{{ action }}</h1>
+    <div hidden="hidden" id="lesson_id">{{ action.id }}</div>
+    <div class="add-card-button" onclick="changeStatus(this)">
+        {% if action.is_active %}Закончить лекцию!{% else %}Начать лекцию!{% endif %}
+    </div>
     <section class="columns">
   		<div class="column">
-            <div class="column-title">Презентации</div>
+            <div class="column-title">Слайды</div>
             <div class="cards">
                 {% for lesson in lessons %}
                     {% if lesson.type == 1 %}

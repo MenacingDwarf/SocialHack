@@ -5,7 +5,7 @@
         <h1>Курсы</h1>
         <div class="row">
             {% for course in courses %}
-                <a class="card course-card" href="/courses/{{ course.id }}">{{ course.title }}</a>
+                <a class="window course-card" href="/courses/{{ course.id }}">{{ course.title }}</a>
             {% endfor %}
         </div>
     </div>

@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from database.models import Teacher, Course, Student, StudentCourse
+from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse, Department
 import pusher
 import json
 
@@ -19,10 +19,34 @@ def home(request):
         courses = StudentCourse.objects.all().filter(student=student)
         data = json.dumps(list(courses.values()))
         courses_name = []
-        for i in courses:
+        lectures = []
+        for i in list(courses):
             courses_name.append(i.course.title)
-        courses_name = json.dumps(courses_name)
-        return render(request, 'start/student.html', {'courses': data, 'titles': courses_name})
+            lectures.append(Lesson.objects.all().filter(course=i.course))
+
+
+        #--------------------------------------------------------------
+        departments = list(Department.objects.all())
+        department_course = list(DepartmentCourse.objects.all())
+        student_courses = list(StudentCourse.objects.all().filter(student=student))
+
+        dep = {}
+        for department in departments:
+            n = 0
+            dep[department.name] = 0
+            for course in student_courses:
+                for el in department_course:
+                    if el.coef > 0.4:
+                        n += 1
+                    if el.department.id == department.id and el.course.id == course.id:
+                        dep[department.name] += el.coef * course.attendance * course.correctness
+            dep[department.name] /= n - 1
+
+        print(dep)
+        dep = json.dumps(dep)
+        #--------------------------------------------------------------
+
+        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
@@ -42,7 +66,7 @@ def log(request):
     return render(request, 'start/log.html')
 
 
-def push(request):
+def push(request, id):
     return render(request, 'start/pusher.html')
 
 
@@ -67,3 +91,5 @@ def add(request):
 def out(request):
     logout(request)
     return redirect('/')
+
+

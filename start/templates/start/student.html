@@ -41,6 +41,16 @@
   </tbody>
 </table>
 
+{% for i in lessons %}
+
+    {% for j in i %}
+
+        <a href="/push/{{ j.id }}"><h4>{{ j.course.title }} / {{ j.title }}</h4></a>
+
+        {% endfor %}
+
+{% endfor %}
+
 </body>
 
 <!-- Resources -->

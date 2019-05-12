@@ -74,7 +74,9 @@ def log(request):
 
 
 def push(request, id):
-    return render(request, 'start/pusher.html')
+    user = User.objects.get(id=request.session['_auth_user_id'])
+    lesson = Lesson.objects.get(id=id)
+    return render(request, 'start/pusher.html', {'student': user, 'lesson': lesson})
 
 
 def add(request):

@@ -3,7 +3,8 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse, Department
+from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse, Department, Task, \
+    Activity, Answer
 import pusher
 import json
 
@@ -50,9 +51,10 @@ def home(request):
             })
         dep = json.dumps(new)
         print(dep)
+        dep = json.dumps(dep)
         #--------------------------------------------------------------
 
-        return render(request, 'start/student.html', {'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep})
+        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
@@ -85,13 +87,17 @@ def add(request):
         ssl=True
     )
 
-    print(request.POST['ref'])
+    task = Task.objects.get(activity=Activity.objects.get(id=request.POST['activity_id']))
 
-    pusher_client.trigger('my-channel', 'my-event', {'message': request.POST['ref']})
+    if task.type == 1:
+        ref = task.content
+        pusher_client.trigger('my-channel', 'my-event', {'message': ref})
+    else:
+        question = task.content
+        options = Answer.objects.all().filter(task=task)
+        pusher_client.trigger('my-channel', 'my-event', {'question': question, 'options': list(options.values())})
 
-    print(request.POST['ref'])
-
-    return redirect('/push')
+    return redirect('/push/1')
 
 
 def out(request):

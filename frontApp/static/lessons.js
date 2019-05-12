@@ -68,7 +68,6 @@ function sendChanges(lesson) {
 	xhr.setRequestHeader("X-CSRFToken", csrftoken)
 
 	xhr.onreadystatechange = function() {
-	    console.log(this.responseText);
 	    lesson.setAttribute('href', JSON.parse(this.responseText).id);
 	};
 

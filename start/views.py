@@ -51,7 +51,6 @@ def home(request):
             })
         dep = json.dumps(new)
         print(dep)
-        dep = json.dumps(dep)
         #--------------------------------------------------------------
 
         return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})

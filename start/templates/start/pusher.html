@@ -32,7 +32,7 @@
          var option = document.createElement("input");
          option.id = item.id;
          option.setAttribute("type","radio");
-         option.value = item.text;
+         option.value = item.id;
          option.name = "answer";
 
          var label = document.createElement("label");
@@ -63,7 +63,7 @@
 <body>
 
 <h3 id="quest"></h3>
-<form action="" method="post" id="fo">
+<form action="/option/" method="post" id="fo">
     {% csrf_token %}
 </form>
 

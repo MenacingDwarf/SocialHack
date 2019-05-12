@@ -7,6 +7,7 @@ from database.models import Teacher, Course, Student, StudentCourse, Lesson, Dep
     Activity, Answer
 import pusher
 import json
+from django.http import JsonResponse
 
 
 def home(request):
@@ -26,7 +27,7 @@ def home(request):
             lectures.append(Lesson.objects.all().filter(course=i.course))
 
         courses_name = json.dumps(courses_name)
-        #--------------------------------------------------------------
+        # --------------------------------------------------------------
         departments = list(Department.objects.all())
         department_course = list(DepartmentCourse.objects.all())
         student_courses = list(StudentCourse.objects.all().filter(student=student))
@@ -53,12 +54,11 @@ def home(request):
         print(dep)
         # --------------------------------------------------------------
         return render(request, 'frontApp/studentProfile.html',
-                      {'student': student, 'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})
+                      {'student': student, 'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
         return render(request, 'frontApp/teacherProfile.html', {'teacher': teacher, 'courses': course})
-
 
 
 def log(request):
@@ -87,6 +87,7 @@ def add(request):
     )
 
     task = Task.objects.get(activity=Activity.objects.get(id=request.POST['activity_id']))
+    print(request.POST['activity_id'])
 
     if task.type == 1:
         ref = task.content
@@ -105,3 +106,18 @@ def out(request):
     return redirect('/')
 
 
+def option(request):
+    obj = Answer.objects.get(id=request.POST['answer'])
+    obj.students.add(Student.objects.get(id=request.session['_auth_user_id']))
+    return redirect('/push/1')
+
+
+def statistic(request, id):
+    options = list(Answer.objects.all().filter(task=Task.objects.get(activity=Activity.objects.get(id=id))))
+    print(options)
+    d = []
+    for i in options:
+        d.append({"answer": i, "litres": len(list(i.students.all()))})
+    print(d)
+
+    return JsonResponse({"data": d})

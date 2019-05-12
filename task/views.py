@@ -56,4 +56,4 @@ def task(request,id_course, id_lesson):
         obj_answer = Answer(text= i, correct = False, task = Task.objects.get(id=obj_content.id))
     obj_answer = Answer(text= task_correct_answer , correct = True, task = Task.objects.get(id=obj_content.id))
     obj_answer.save()
-    return redirect('/courses/{}/{}/'.format(id_course, id_lesson))
+    return JsonResponse({"id": obj_act.id})

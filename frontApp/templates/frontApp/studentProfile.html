@@ -39,7 +39,12 @@
                     </div>
                 </th>
                 <th><h1>Статистика студента</h1></th>
-                <th></th>
+                <th>{% if active|length == 0 %}Нет активных лекций{% else %}
+                    Активная лекция!
+                    {% for l in active %}
+                        <a href="/push/{{ l.id }}"><h4>{{ l.course.title }} / {{ l.title }}</h4></a>
+                    {% endfor %}
+                {% endif %}</th>
             </tr>
             </thead>
             <tbody>

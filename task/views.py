@@ -54,6 +54,7 @@ def task(request,id_course, id_lesson):
     obj_content.save()
     for i in task_answer.split(','):
         obj_answer = Answer(text= i, correct = False, task = Task.objects.get(id=obj_content.id))
+        obj_answer.save()
     obj_answer = Answer(text= task_correct_answer , correct = True, task = Task.objects.get(id=obj_content.id))
     obj_answer.save()
     return JsonResponse({"id": obj_act.id})

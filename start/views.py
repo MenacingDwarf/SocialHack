@@ -86,10 +86,10 @@ def add(request):
         pusher_client.trigger('my-channel', 'my-event', {'message': ref})
     else:
         question = task.content
-        options = Answer.objects.all(task=task)
-        pusher_client.trigger('my-channel', 'my-event', {'question': question, 'options': list(options)})
+        options = Answer.objects.all().filter(task=task)
+        pusher_client.trigger('my-channel', 'my-event', {'question': question, 'options': list(options.values())})
 
-    return redirect('/push')
+    return redirect('/push/1')
 
 
 def out(request):

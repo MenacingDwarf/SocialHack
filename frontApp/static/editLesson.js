@@ -32,7 +32,6 @@ var add_pres = function (elem) {
     card.innerHTML = textareas[0].value;
     card.setAttribute("data-link", textareas[1].value);
     card.setAttribute("ondblclick", "sendTask(this)");
-    card.setAttribute("onclick", "giveGraph(this)");
 
     sendChanges(textareas[0].value, textareas[1].value, card);
     replace_buttons(elem, "start_adding_pres(this)", "Добавить");
@@ -47,7 +46,7 @@ var stop_adding_pres = function (elem) {
     cards = elem.parentNode.parentNode.children[1];
     cards.querySelectorAll('textarea.card').forEach((item) => {
         cards.removeChild(item);
-    })
+    });
     replace_buttons(elem, "start_adding_pres(this)", "Добавить");
 };
 
@@ -151,7 +150,7 @@ function createGraph(data) {
 // Add and configure Series
     var pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "litres";
-    pieSeries.dataFields.category = "country";
+    pieSeries.dataFields.category = "answer";
     pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;

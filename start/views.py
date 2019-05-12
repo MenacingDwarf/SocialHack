@@ -26,7 +26,7 @@ def home(request):
         for i in list(courses):
             courses_name.append(i.course.title)
             lectures.append(Lesson.objects.all().filter(course=i.course))
-            active_lectures.append(Lesson.objects.all().filter(course=i.course, is_active=True))
+            active_lectures += Lesson.objects.all().filter(course=i.course, is_active=True)
 
         courses_name = json.dumps(courses_name)
         # --------------------------------------------------------------
@@ -53,7 +53,8 @@ def home(request):
                 "predisposition": dep[i]
             })
         dep = json.dumps(new)
-        print(dep)
+
+
         # --------------------------------------------------------------
         return render(request, 'frontApp/studentProfile.html',
                       {'student': student, 'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep,

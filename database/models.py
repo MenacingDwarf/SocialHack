@@ -33,6 +33,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     title = models.CharField(max_length=50)
     course = models.ForeignKey('Course', models.CASCADE, related_name="lessons")
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

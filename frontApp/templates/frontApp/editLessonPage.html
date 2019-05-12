@@ -12,7 +12,7 @@
                 {% for lesson in lessons %}
                     {% if lesson.type == 1 %}
                         <div data-id="{{ lesson.id }}" data-link="{{ lesson.content }}"
-                             class="card" onclick="giveGraph(this)" ondblclick="sendTask(this)">
+                             class="card" ondblclick="sendTask(this)">
                             {{ lesson }}
                         </div>
                     {% endif %}

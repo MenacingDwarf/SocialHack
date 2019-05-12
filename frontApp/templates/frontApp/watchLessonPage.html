@@ -1,0 +1,78 @@
+{% extends 'frontApp/mainWraper.html' %}
+{% block title %}Профиль{% endblock %}
+{% block page %}
+    <div class="container">
+        <div class="row">
+            <div href="/" class="window teacher-card">
+                <div class="row">
+                    <div class="col-3"><img src="{{ student.ava }}"></div>
+                    <div class="col-9"><h4>{{ student.second_name }} {{ student.name }}</h4>Студент</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h1>{{ lesson }}</h1>
+            <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+
+            <script>
+
+                // Enable pusher logging - don't include this in production
+                Pusher.logToConsole = true;
+
+                var pusher = new Pusher('a26085dc09d59ab89666', {
+                    cluster: 'eu',
+                    forceTLS: true
+                });
+
+                var channel = pusher.subscribe('my-channel');
+
+                channel.bind('my-event', function (data) {
+
+                    var edit_save = document.getElementById("image");
+                    edit_save.src = data.message;
+
+                    if (data.question !== undefined) {
+                        document.getElementById("quest").innerHTML = data.question;
+                    }
+
+
+                    var form = document.getElementById("fo");
+                    data.options.forEach((item) => {
+                        var option = document.createElement("input");
+                        option.id = item.id;
+                        option.setAttribute("type", "radio");
+                        option.value = item.id;
+                        option.name = "answer";
+
+                        var label = document.createElement("label");
+                        label.setAttribute("for", item.id);
+                        label.innerHTML = item.text;
+
+                        var input = document.createElement("p");
+                        input.appendChild(option);
+                        input.appendChild(label);
+                        form.appendChild(input);
+                    });
+
+                    var button = document.createElement('button');
+                    button.setAttribute('type', 'submit');
+                    button.className = "btn btn-primary";
+                    button.innerHTML = "Войти";
+                    form.appendChild(button);
+
+
+                });
+
+
+            </script>
+
+            <h3 id="quest"></h3>
+            <form action="/option/" method="post" id="fo">
+                {% csrf_token %}
+            </form>
+
+
+            <img style="margin-top: 20px" id=image src="">
+        </div>
+    </div>
+{% endblock %}

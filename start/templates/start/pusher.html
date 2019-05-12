@@ -22,16 +22,33 @@
 
       var form = document.getElementById("fo");
       data.options.forEach((item) => {
-         var option = document.createElement("p");
-         option.innerHTML = item.text;
-         form.appendChild(option);
+         var option = document.createElement("input");
+         option.id = item.id;
+         option.setAttribute("type","radio");
+         option.value = item.text;
+         option.name = "answer";
+
+         var label = document.createElement("label");
+         label.setAttribute("for",item.id);
+         label.innerHTML = item.text;
+
+         var input = document.createElement("p");
+         input.appendChild(option);
+         input.appendChild(label);
+         form.appendChild(input);
       });
 
+      var button = document.createElement('button');
+      button.setAttribute('type','submit');
+      button.className = "btn btn-primary";
+      button.innerHTML = "Войти";
+      form.appendChild(button);
 
       var edit_save = document.getElementById("image");
       edit_save.src = data.message;
 
     });
+
 
   </script>
 
@@ -42,10 +59,6 @@
 <h3 id="quest"></h3>
 <form action="" method="post" id="fo">
     {% csrf_token %}
-
-
-
-    <button type="submit" class="btn btn-primary">Войти</button>
 </form>
 
 

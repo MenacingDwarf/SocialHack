@@ -182,8 +182,8 @@ function getCookie(name) {
 function giveGraph(card) {
     var csrftoken = getCookie('csrftoken');
     var xhr = new XMLHttpRequest();
-    var body = "activity_id=" + encodeURIComponent(card.getAttribute("data-id"));
-    xhr.open("POST", '/statistic/'+card.getAttribute('data-id')+'/', true);
+    var body = "?activity_id=" + encodeURIComponent(card.getAttribute("data-id"));
+    xhr.open("GET", '/statistic/'+card.getAttribute('data-id'), true);
 
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader("X-CSRFToken", csrftoken);

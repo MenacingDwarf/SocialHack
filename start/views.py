@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse
+from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse, Department
 import pusher
 import json
 
@@ -26,13 +26,23 @@ def home(request):
 
 
         #--------------------------------------------------------------
+        departments = list(Department.objects.all())
         department_course = list(DepartmentCourse.objects.all())
         student_courses = list(StudentCourse.objects.all().filter(student=student))
-        print(department_course[0].coef)
-        print(student_courses[0].course.id)
 
+        dep = {}
+        for department in departments:
+            n = 0
+            dep[department.name] = 0
+            for course in student_courses:
+                for el in department_course:
+                    if el.coef > 0.4:
+                        n += 1
+                    if el.department.id == department.id and el.course.id == course.id:
+                        dep[department.name] += el.coef * course.attendance * course.correctness
+            dep[department.name] /= n - 1
 
-
+        print(dep)
         #--------------------------------------------------------------
 
         return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures})

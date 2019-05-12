@@ -135,4 +135,4 @@ def activate(request):
     else:
         lesson.is_active = True
     lesson.save()
-    return redirect('/courses/{}/{}'.format(lesson.course.id, lesson.id))
+    return JsonResponse({'is_active': lesson.is_active})

@@ -30,13 +30,14 @@ var add_card = function(elem) {
 	var card = document.createElement('div');
 	card.className = "card";
 	card.innerHTML = textareas[0].value;
-
+    card.setAttribute("data-link", textareas[1].value);
+    card.setAttribute("onclick", "sendTask(this)");
 	var link = document.createElement('div');
 	link.setAttribute("hidden","hidden");
 	link.innerHTML = textareas[1].value;
 
 	card.appendChild(link);
-	sendChanges(textareas[0].value,textareas[1].value);
+	sendChanges(textareas[0].value,textareas[1].value,card);
 	replace_buttons(elem,"start_adding_card(this)","Добавить");
 	textareas[0].parentNode.removeChild(textareas[0]);
 	textareas[1].parentNode.replaceChild(card,textareas[1]);
@@ -88,13 +89,66 @@ var make_buttons = function(text,add_function,close_function) {
   return buttons;
 }
 
-function sendChanges(present_name,present_link) {
+function printMe(elem) {
+    console.log(elem.getAttribute('data-id'));
+}
+
+function sendChanges(present_name,present_link,card) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    console.log(present_name);
   var xhr = new XMLHttpRequest();
-  var body = "?present_name=" + encodeURIComponent(present_name) +
-             "&present_link=" + encodeURIComponent(present_link);
+  var body = "present_name=" + encodeURIComponent(present_name) +
+             "&present_url=" + encodeURIComponent(present_link);
   xhr.open("POST", 'update/present/', true);
 
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+  xhr.onreadystatechange = function() {
+	    card.setAttribute('data-id', JSON.parse(this.responseText).id);
+	};
+
+  xhr.send(body);
+}
+
+function sendTask(card) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+  var xhr = new XMLHttpRequest();
+  var body = "activity_id=" + encodeURIComponent(card.getAttribute("data-id"));
+  xhr.open("POST", '/add', true);
+
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
 
   xhr.send(body);
 }

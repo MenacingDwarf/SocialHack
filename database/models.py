@@ -57,6 +57,7 @@ class Answer(models.Model):
     task = models.ForeignKey('Task', models.CASCADE, related_name="answers")
     text = models.TextField()
     correct = models.BooleanField()
+    students = models.ManyToManyField('Student', related_name='answers')
 
 
 class StudentTask(models.Model):

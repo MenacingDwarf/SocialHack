@@ -1,9 +1,9 @@
 function startAddingLesson(elem) {
 	var lessons = elem.parentNode;
 	var lesson = document.createElement('div');
-	lesson.className = "lesson-card card";
+	lesson.className = "lesson-card window";
 	var input = document.createElement('textarea');
-	input.className = "card";
+	input.className = "window";
 	input.setAttribute("placeholder","Введите название лекции");
 
 	var add = document.createElement('div');
@@ -25,7 +25,7 @@ function addLesson(elem) {
 }
 function createLesson(id,title,next) {
 	var lesson = document.createElement('a');
-	lesson.className = "card lesson-card";
+	lesson.className = "window lesson-card";
 	lesson.setAttribute('href','id');
 	lesson.id = id;
 	lesson.innerHTML = title;
@@ -35,7 +35,7 @@ function createLesson(id,title,next) {
 
 function replaceLesson(elem) {
 	var lesson = document.createElement('div');
-	lesson.className = 'card new-lesson';
+	lesson.className = 'window new-lesson';
 	lesson.innerHTML = 'Новая лекция';
 	lesson.setAttribute('onclick','startAddingLesson(this)');
 	elem.parentNode.replaceChild(lesson,elem);

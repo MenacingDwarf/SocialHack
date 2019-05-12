@@ -5,9 +5,9 @@
         <h1>Лекции</h1>
         <div class="row">
             {% for lesson in lessons %}
-                <a class="card lesson-card" href="{{ lesson.id }}">{{ lesson }}</a>
+                <a class="window lesson-card" href="{{ lesson.id }}">{{ lesson }}</a>
             {% endfor %}
-            <div class="card new-lesson" onclick="startAddingLesson(this)">Новая лекция</div>
+            <div class="window new-lesson" onclick="startAddingLesson(this)">Новая лекция</div>
         </div>
     </div>
 

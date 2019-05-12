@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from database.models import Teacher, Course, Student, StudentCourse, Lesson
+from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse
 import pusher
 import json
 
@@ -16,18 +16,26 @@ def home(request):
 
     if 'st' in user.username:
         student = Student.objects.get(user=user)
-        courses = list(StudentCourse.objects.all().filter(student=student))
-        #data = json.dumps(list(courses.values()))
+        courses = StudentCourse.objects.all().filter(student=student)
+        data = json.dumps(list(courses.values()))
         courses_name = []
         lectures = []
-        for i in courses:
+        for i in list(courses):
             courses_name.append(i.course.title)
             lectures.append(Lesson.objects.all().filter(course=i.course))
 
-        #lectures = Lesson.objects.all().filter(course=courses)
+
+        #--------------------------------------------------------------
+        department_course = list(DepartmentCourse.objects.all())
+        student_courses = list(StudentCourse.objects.all().filter(student=student))
+        print(department_course[0].coef)
+        print(student_courses[0].course.id)
 
 
-        return render(request, 'start/student.html', { 'titles':courses_name, 'lessons': lectures})
+
+        #--------------------------------------------------------------
+
+        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
@@ -74,5 +82,3 @@ def out(request):
     return redirect('/')
 
 
-def statistic(request):
-    pass

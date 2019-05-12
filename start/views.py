@@ -43,9 +43,10 @@ def home(request):
             dep[department.name] /= n - 1
 
         print(dep)
+        dep = json.dumps(dep)
         #--------------------------------------------------------------
 
-        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures})
+        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)

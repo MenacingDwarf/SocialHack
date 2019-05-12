@@ -115,7 +115,7 @@ def out(request):
 def option(request):
     obj = Answer.objects.get(id=request.POST['answer'])
     obj.students.add(Student.objects.get(id=request.session['_auth_user_id']))
-    return redirect('/push/1')
+    return redirect('/push/{}'.format(request.POST['lesson']))
 
 
 def statistic(request, id):

@@ -90,6 +90,7 @@ def add(request):
 
     if task.type == 1:
         ref = task.content
+        print(ref)
         pusher_client.trigger('my-channel', 'my-event', {'message': ref})
     else:
         question = task.content

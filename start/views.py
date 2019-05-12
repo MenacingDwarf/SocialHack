@@ -68,9 +68,9 @@ def log(request):
             login(request, user)
             return redirect('/')
         else:
-            return render(request, 'start/log.html', {'message': 'Неверный логин или пароль'})
+            return render(request, 'frontApp/logPage.html', {'message': 'Неверный логин или пароль'})
 
-    return render(request, 'start/log.html')
+    return render(request, 'frontApp/logPage.html')
 
 
 def push(request, id):

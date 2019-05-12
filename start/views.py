@@ -24,7 +24,7 @@ def home(request):
             courses_name.append(i.course.title)
             lectures.append(Lesson.objects.all().filter(course=i.course))
 
-
+        courses_name = json.dumps(courses_name)
         #--------------------------------------------------------------
         departments = list(Department.objects.all())
         department_course = list(DepartmentCourse.objects.all())
@@ -42,11 +42,17 @@ def home(request):
                         dep[department.name] += el.coef * course.attendance * course.correctness
             dep[department.name] /= n - 1
 
+        new = []
+        for i in dep:
+            new.append({
+                "course_id": i,
+                "predisposition": dep[i]
+            })
+        dep = json.dumps(new)
         print(dep)
-        dep = json.dumps(dep)
         #--------------------------------------------------------------
 
-        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})
+        return render(request, 'start/student.html', {'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)

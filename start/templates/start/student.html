@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Profile</title>
 </head>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -18,38 +18,69 @@
   height: 500px;
   margin: 10%;
 }
+
+#chartdiv_2 {
+  width: 400px;
+  height: 500px;
+  margin: 10%;
+}
+
+h1,th {
+  text-align: center;
+}
+a{
+  color: #6B808C;
+}
+.left{
+  text-align: left;
+}
+.right{
+  text-align: right;
+}
 </style>
 
 <body>
 
-<h1>Страница студента</h1>
-
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">Attendance</th>
-      <th scope="col">Correctness</th>
-      <th scope="col">Department</th>
+      <th class="left">
+        <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Все лекции
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% for i in lessons %}
+
+            {% for j in i %}
+
+              <a href="/push/{{ j.id }}"><h4>{{ j.course.title }} / {{ j.title }}</h4></a>
+
+            {% endfor %}
+
+          {% endfor %}
+        </div>
+        </div>
+      </th>
+      <th><h1>Страница студента</h1></th>
+      <th class="right"><a href="/out"> <button type="button" class="btn btn-secondary">Выйти</button> </a></th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <th>Attendance</th>
+      <th>Predisposition</th>
+      <th>Correctness</th>
+    </tr>
+    <tr>
       <td><div id="chartdiv"></div></td>
+      <td><div id="chartdiv_2"></div></td>
       <td><div id="chartdiv_1"></div></td>
-      <td><div id="chartdiv"></div></td>
     </tr>
   </tbody>
 </table>
 
-{% for i in lessons %}
 
-    {% for j in i %}
-
-        <a href="/push/{{ j.id }}"><h4>{{ j.course.title }} / {{ j.title }}</h4></a>
-
-        {% endfor %}
-
-{% endfor %}
 
 </body>
 
@@ -57,7 +88,9 @@
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!-- Chart code -->
 <script>
 
@@ -65,11 +98,15 @@ var array = [];
 var array_1 = [];
 var courses = JSON.parse('{{ courses|safe }}');
 var titles = JSON.parse('{{ titles|safe }}');
+var dep = JSON.parse('{{ dep|safe }}');
+
 courses.forEach(function(item, i, courses) {
-    array.push({"course_id": titles[item.course_id - 1], "attendance": item.attendance})
+    array.push({"course_id": titles[item.course_id - 1], "attendance": item.attendance});
     array_1.push({"course_id": titles[item.course_id - 1], "correctness": item.correctness})
 });
 
+console.log(array);
+console.log(array_1);
 am4core.ready(function() {
 
 // Themes begin
@@ -183,6 +220,33 @@ chart_1.cursor = new am4charts.XYCursor();
 
 }); // end am4core.ready()
 
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart_2 = am4core.create("chartdiv_2", am4charts.PieChart);
+
+// Add data
+chart_2.data = dep;
+
+// Add and configure Series
+var pieSeries_2 = chart_2.series.push(new am4charts.PieSeries());
+pieSeries_2.dataFields.value = "predisposition";
+pieSeries_2.dataFields.category = "course_id";
+pieSeries_2.slices.template.stroke = am4core.color("#fff");
+pieSeries_2.slices.template.strokeWidth = 2;
+pieSeries_2.slices.template.strokeOpacity = 1;
+
+
+// This creates initial animation
+pieSeries_2.hiddenState.properties.opacity = 1;
+pieSeries_2.hiddenState.properties.endAngle = -90;
+pieSeries_2.hiddenState.properties.startAngle = -90;
+
+}); // end am4core.ready()
 </script>
 
 </html>

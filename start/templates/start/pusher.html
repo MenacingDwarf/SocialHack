@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <title>Pusher Test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 
   <script>
@@ -17,7 +18,15 @@
     var channel = pusher.subscribe('my-channel');
 
     channel.bind('my-event', function(data) {
-      //document.getElementById("image").innerHTML = data.message;
+      document.getElementById("quest").innerHTML = data.question;
+
+      var form = document.getElementById("fo");
+      data.options.forEach((item) => {
+         var option = document.createElement("p");
+         option.innerHTML = item.text;
+         form.appendChild(option);
+      });
+
 
       var edit_save = document.getElementById("image");
       edit_save.src = data.message;
@@ -26,22 +35,25 @@
 
   </script>
 
+
 </head>
+<body>
 
-
-<form action="/add/" method="post">
+<h3 id="quest"></h3>
+<form action="" method="post" id="fo">
     {% csrf_token %}
 
-    <label for="exampleInputEmail1">Адрес электронной почты</label>
-    <input type="text" id="exampleInputEmail1" name="ref">
 
-    <button type="submit">Загрузить</button>
 
+    <button type="submit" class="btn btn-primary">Войти</button>
 </form>
 
 
-<body>
+
+
   <img id=image src="">
 
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

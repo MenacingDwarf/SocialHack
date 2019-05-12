@@ -145,7 +145,7 @@ function sendTask(card) {
     var csrftoken = getCookie('csrftoken');
   var xhr = new XMLHttpRequest();
   var body = "activity_id=" + encodeURIComponent(card.getAttribute("data-id"));
-  xhr.open("POST", '/add', true);
+  xhr.open("POST", '/add/', true);
 
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.setRequestHeader("X-CSRFToken", csrftoken);

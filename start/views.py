@@ -3,7 +3,8 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse, Department
+from database.models import Teacher, Course, Student, StudentCourse, Lesson, DepartmentCourse, Department, Task, \
+    Activity, Answer
 import pusher
 import json
 
@@ -24,8 +25,7 @@ def home(request):
             courses_name.append(i.course.title)
             lectures.append(Lesson.objects.all().filter(course=i.course))
 
-
-        #--------------------------------------------------------------
+        # --------------------------------------------------------------
         departments = list(Department.objects.all())
         department_course = list(DepartmentCourse.objects.all())
         student_courses = list(StudentCourse.objects.all().filter(student=student))
@@ -44,14 +44,14 @@ def home(request):
 
         print(dep)
         dep = json.dumps(dep)
-        #--------------------------------------------------------------
+        # --------------------------------------------------------------
 
-        return render(request, 'start/student.html', {'courses':data, 'titles':courses_name, 'lessons': lectures, 'dep': dep})
+        return render(request, 'start/student.html',
+                      {'courses': data, 'titles': courses_name, 'lessons': lectures, 'dep': dep})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)
         return render(request, 'frontApp/teacherProfile.html', {'teacher': teacher, 'courses': course})
-
 
 
 def log(request):
@@ -79,11 +79,15 @@ def add(request):
         ssl=True
     )
 
-    print(request.POST['ref'])
+    task = Task.objects.get(activity=Activity.objects.get(id=request.POST['activity_id']))
 
-    pusher_client.trigger('my-channel', 'my-event', {'message': request.POST['ref']})
-
-    print(request.POST['ref'])
+    if task.type == 1:
+        ref = task.content
+        pusher_client.trigger('my-channel', 'my-event', {'message': ref})
+    else:
+        question = task.content
+        options = Answer.objects.all(task=task)
+        pusher_client.trigger('my-channel', 'my-event', {'question': question, 'options': list(options)})
 
     return redirect('/push')
 
@@ -91,5 +95,3 @@ def add(request):
 def out(request):
     logout(request)
     return redirect('/')
-
-

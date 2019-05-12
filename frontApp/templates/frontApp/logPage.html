@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "style.css" %}">
+
+</head>
+<body>
+<div class="header">
+    <div class="container">
+        <div class="logos"><span class="green">PM</span>-Lecture</div>
+    </div>
+    <div class="panel">
+    </div>
+</div>
+<form action="/log/" method="post" style="padding-left: 30%; padding-right: 30%;">
+    <p style="color: red">{{ message }}</p>
+    {% csrf_token %}
+    <div class="form-group">
+        <h3>Заполните все поля для входа в систему</h3>
+        <label for="exampleInputEmail1">Адрес электронной почты</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" name="user" aria-describedby="emailHelp"
+               placeholder="example@mail.ru" required>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Пароль</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="pass"
+               placeholder="*********" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+</form>
+</div>
+</body>
+</html>

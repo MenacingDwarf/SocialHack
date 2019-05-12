@@ -21,8 +21,8 @@ def home(request):
         courses_name = []
         for i in courses:
             courses_name.append(i.course.title)
-
-        return render(request, 'start/student.html', {'courses': data, 'titles':courses_name})
+        courses_name = json.dumps(courses_name)
+        return render(request, 'start/student.html', {'courses': data, 'titles': courses_name})
     else:
         teacher = Teacher.objects.get(user=user)
         course = Course.objects.all().filter(tutor=teacher)

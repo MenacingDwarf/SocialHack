@@ -117,7 +117,7 @@ def statistic(request, id):
     print(options)
     d = []
     for i in options:
-        d.append({"answer": i, "litres": len(list(i.students.all()))})
+        d.append({"answer": i.text, "litres": len(list(i.students.all()))})
     print(d)
 
     return JsonResponse({"data": d})

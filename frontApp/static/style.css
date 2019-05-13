@@ -103,7 +103,14 @@ textarea.window {
 	opacity: 0.7;
 }
 
-
+.display {
+	width: 100%;
+	min-height: 600px;
+	height: 600px;
+	background-color: white;
+	border: solid black 1px;
+	overflow-y: auto;
+}
 /*columns and cards*/
 /* Колонки */
 .columns {
@@ -111,6 +118,7 @@ textarea.window {
     display: flex;
     overflow-x: auto;
     align-items: flex-start;
+	margin-bottom: 20px;
 }
 .columns::-webkit-scrollbar {
     height: 1vh;

@@ -85,9 +85,9 @@ def push(request, id):
 
 def add(request):
     pusher_client = pusher.Pusher(
-        app_id='780550',
-        key='a26085dc09d59ab89666',
-        secret='c6ac4917c6fcca212017',
+        app_id='781363',
+        key='5a31817a77c426ac84db',
+        secret='f31c9e17a3b6bb3e1490',
         cluster='eu',
         ssl=True
     )

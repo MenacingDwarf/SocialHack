@@ -31,7 +31,6 @@ var add_pres = function (elem) {
     card.className = "card";
     card.innerHTML = textareas[0].value;
     card.setAttribute("data-link", textareas[1].value);
-    card.setAttribute("ondblclick", "sendTask(this)");
 
     sendChanges(textareas[0].value, textareas[1].value, card);
     replace_buttons(elem, "start_adding_pres(this)", "Добавить");
@@ -85,7 +84,6 @@ var add_quize = function (elem) {
     var card = document.createElement('div');
     card.className = "card";
     card.innerHTML = textareas[0].value;
-    card.setAttribute("ondblclick", "sendTask(this)");
     card.setAttribute("onclick", "giveGraph(this)");
 
     sendChangesTask(textareas[0].value, textareas[1].value, textareas[2].value, textareas[3].value, card);

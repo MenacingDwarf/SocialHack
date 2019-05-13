@@ -89,10 +89,13 @@ def push(request, id):
                       {"student": user, "lesson": lesson, "activity": {"message": ref}})
     else:
         question = task.content
-        options = Answer.objects.all().filter(task=task)
+        options = list(Answer.objects.all().filter(task=task).values())
+        print(options)
+        for opt in options:
+            opt['correct'] = "True"
         return render(request, 'frontApp/watchLessonPage.html',
                       {'student': user, 'lesson': lesson,
-                       'activity': {'question': question, 'options': list(options.values())}})
+                       'activity': {'question': question, 'options': options}})
 
 
 def add(request):

@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'Hackaton.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd7898rb0bld853',
-        'USER': 'bfllvpgcjavyww',
-        'PASSWORD': '48e213dd19505c4aa8e4dda151b14187fb6a919c73919f0a9da3e97d64495b29',
+        'NAME': 'd5agg5rhtjd197',
+        'USER': 'lgmrvrxkbmpikf',
+        'PASSWORD': '3f6f5239d6d36009fea10d7bac439845417754f456ca46ac945b46ed286698d2',
         'HOST': 'ec2-75-101-131-79.compute-1.amazonaws.com',
         'PORT': '5432',
     }

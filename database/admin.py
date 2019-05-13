@@ -13,4 +13,3 @@ admin.site.register(models.Answer)
 admin.site.register(models.StudentTask)
 admin.site.register(models.Department)
 admin.site.register(models.DepartmentCourse)
-

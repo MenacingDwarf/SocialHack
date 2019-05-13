@@ -80,7 +80,19 @@ def log(request):
 def push(request, id):
     user = Student.objects.get(user=User.objects.get(id=request.session['_auth_user_id']))
     lesson = Lesson.objects.get(id=id)
-    return render(request, 'frontApp/watchLessonPage.html', {'student': user, 'lesson': lesson})
+    task = Task.objects.get(activity=lesson.current_activity)
+
+    if task.type == 1:
+        ref = task.content
+        print(ref)
+        return render(request, 'frontApp/watchLessonPage.html',
+                      {"student": user, "lesson": lesson, "activity": {"message": ref}})
+    else:
+        question = task.content
+        options = Answer.objects.all().filter(task=task)
+        return render(request, 'frontApp/watchLessonPage.html',
+                      {'student': user, 'lesson': lesson,
+                       'activity': {'question': question, 'options': list(options.values())}})
 
 
 def add(request):
@@ -91,9 +103,10 @@ def add(request):
         cluster='eu',
         ssl=True
     )
-
-    task = Task.objects.get(activity=Activity.objects.get(id=request.POST['activity_id']))
-    print(request.POST['activity_id'])
+    activity = Activity.objects.get(id=request.POST['activity_id'])
+    task = Task.objects.get(activity=activity)
+    activity.lesson.current_activity = activity
+    activity.lesson.save()
 
     if task.type == 1:
         ref = task.content
